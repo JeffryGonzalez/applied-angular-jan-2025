@@ -8,6 +8,7 @@ import { Component, VERSION } from '@angular/core';
       <h1>Angular Starter</h1>
       <p>Using Angular {{ v.full }}</p>
       <p>Now with hot module replacement!!!!</p>
+      <p>Even more stuff that you don't have.</p>
       <ul>
         <li><a href="https://tailwindcss.com/">Tailwind for CSS</a></li>
         <li><a href="https://daisyui.com/">DaisyUi for UI Library</a></li>
