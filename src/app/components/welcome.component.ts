@@ -1,4 +1,4 @@
-import { Component, VERSION } from '@angular/core';
+import { Component, signal, VERSION } from '@angular/core';
 
 @Component({
   selector: 'app-welcome',
@@ -22,4 +22,6 @@ import { Component, VERSION } from '@angular/core';
 })
 export class WelcomeComponent {
   v = VERSION;
+
+  name = signal('Jeff');
 }
