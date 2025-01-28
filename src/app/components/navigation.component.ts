@@ -57,7 +57,7 @@ import { RouterLink } from '@angular/router';
 export class NavigationComponent {
   links = signal([
     {
-      href: '/',
+      href: '',
       text: 'Home',
     },
     {
