@@ -9,6 +9,6 @@ export const routes: Routes = [
   {
     path: 'demos',
     loadChildren: () =>
-      import('./demos/demos.routes').then((r) => r.DEMO_ROUTES),
+      import('./demos/demos.routes').then((r) => r.DEMO_ROUTES), // dynamic import
   },
 ];
