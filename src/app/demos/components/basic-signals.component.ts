@@ -14,6 +14,10 @@ import { AddAnimalComponent } from './add-animal.component';
   imports: [GolfScoreComponent, AnimalListComponent, AddAnimalComponent],
   template: `
     <div>
+      <p>You have 99 Animals, and Your Score is 128</p>
+    </div>
+
+    <div>
       <h2 class="text-2xl">Golfing!</h2>
       <app-golf-score />
 
