@@ -1,28 +1,35 @@
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+} from '@angular/core';
+import { GolfService } from './services/golf.service';
+import { GolfStore } from './services/golf.store';
 
 @Component({
   selector: 'app-golf-hole',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [],
   imports: [],
   template: `
-    <p>Your Score For This Hole {{ score() }}</p>
-    <button (click)="takeStroke()" class="btn btn-sm btn-success btn-circle">
+    <p>Your Score For This Hole {{ store.score() }}</p>
+    <button
+      (click)="store.takeAStroke()"
+      class="btn btn-sm btn-success btn-circle"
+    >
       +
     </button>
-    <button (click)="removeStroke()" class="btn btn-sm btn-warning btn-circle">
+    <button
+      [disabled]="store.removeStrokeDisabled()"
+      (click)="store.removeStroke()"
+      class="btn btn-sm btn-warning btn-circle"
+    >
       -
     </button>
   `,
   styles: ``,
 })
 export class GolfHoleComponent {
-  score = signal(0);
-
-  takeStroke() {
-    this.score.update((s) => s + 1);
-  }
-
-  removeStroke() {
-    this.score.update((s) => s - 1);
-  }
+  store = inject(GolfStore);
 }
