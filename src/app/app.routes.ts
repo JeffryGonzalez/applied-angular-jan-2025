@@ -22,8 +22,6 @@ export const routes: Routes = [
   {
     path: 'jeff-counter',
     loadChildren: () =>
-      import('./jeff-counter/counter.routes').then(
-        (r) => r.JEFF_COUNTER_ROUTES,
-      ),
+      import('./jeff-counter/counter.routes').then((r) => r.COUNTER_ROUTES),
   },
 ];
