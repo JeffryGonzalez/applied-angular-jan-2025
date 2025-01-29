@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { ResourcesComponent } from './resources/resources.component';
+import { canMatchFeature } from '@shared';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,7 @@ export const routes: Routes = [
 
   {
     path: 'golf',
+    canMatch: [canMatchFeature('golf')],
     loadChildren: () => import('./golf/golf.routes').then((r) => r.GOLF_ROUTES),
   },
   {
