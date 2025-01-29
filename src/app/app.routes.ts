@@ -21,6 +21,9 @@ export const routes: Routes = [
   },
   {
     path: 'jeff-counter',
+    data: {
+      preload: true,
+    },
     loadChildren: () =>
       import('./jeff-counter/counter.routes').then((r) => r.COUNTER_ROUTES),
   },

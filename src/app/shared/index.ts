@@ -1,1 +1,3 @@
-export * from './preloading-strategy';
+// Barrel pattern.
+
+export * from './routing/';
