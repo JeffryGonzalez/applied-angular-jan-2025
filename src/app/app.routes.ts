@@ -17,9 +17,6 @@ export const routes: Routes = [
 
   {
     path: 'golf',
-    data: {
-      preload: true,
-    },
     loadChildren: () => import('./golf/golf.routes').then((r) => r.GOLF_ROUTES),
   },
   {
