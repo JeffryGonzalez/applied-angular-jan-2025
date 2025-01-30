@@ -81,7 +81,7 @@ export class CreateComponent {
     if (this.form.valid) {
       const newItem = this.form.getRawValue();
       this.store.addNewsItem(newItem);
-      //this.store.addResource()
+      this.form.reset();
     } else {
       console.log('has errors, bro.');
     }

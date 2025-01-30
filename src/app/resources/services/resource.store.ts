@@ -1,3 +1,4 @@
+import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { computed, inject } from '@angular/core';
 import {
   patchState,
@@ -7,11 +8,9 @@ import {
   withMethods,
 } from '@ngrx/signals';
 import { addEntity, setEntities, withEntities } from '@ngrx/signals/entities';
-import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import { ResourceDataService } from './resource.data';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { mergeMap, pipe, switchMap, tap } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { ResourceDataService } from './resource.data';
 
 export type NewsItemEntity = {
   id: string;

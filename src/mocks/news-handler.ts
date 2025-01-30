@@ -30,6 +30,7 @@ export const NewsHandlers = [
     return HttpResponse.json(fakeNewsItems);
   }),
   http.post('https://prod32.hypertheory.com/api/news', async ({ request }) => {
+    await delay(5000);
     const body = (await request.json()) as unknown as NewsItemCreateModel;
     const newItem = { ...body, id: crypto.randomUUID() } as NewsItemEntity;
     fakeNewsItems.push(newItem);
