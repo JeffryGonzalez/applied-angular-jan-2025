@@ -6,17 +6,20 @@ import {
   withHooks,
   withMethods,
 } from '@ngrx/signals';
-import { setEntities, withEntities } from '@ngrx/signals/entities';
+import { addEntity, setEntities, withEntities } from '@ngrx/signals/entities';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { ResourceDataService } from './resource.data';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { pipe, switchMap, tap } from 'rxjs';
+import { mergeMap, pipe, switchMap, tap } from 'rxjs';
+
 export type NewsItemEntity = {
   id: string;
   title: string;
   description: string;
   link: string;
 };
+
+export type NewsItemCreateModel = Omit<NewsItemEntity, 'id'>;
 export const ResourceStore = signalStore(
   withEntities<NewsItemEntity>(),
   withDevtools('resource-store'),
@@ -29,6 +32,15 @@ export const ResourceStore = signalStore(
   withMethods((store) => {
     const service = inject(ResourceDataService);
     return {
+      addNewsItem: rxMethod<NewsItemCreateModel>(
+        pipe(
+          mergeMap((item) =>
+            service
+              .addNewsResource(item)
+              .pipe(tap((r) => patchState(store, addEntity(r)))),
+          ),
+        ),
+      ),
       _load: rxMethod<void>(
         pipe(
           switchMap(() =>

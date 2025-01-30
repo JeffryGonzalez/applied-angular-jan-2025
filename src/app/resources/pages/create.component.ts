@@ -1,10 +1,11 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ResourceStore } from '../services/resource.store';
 
 @Component({
   selector: 'app-create',
@@ -64,6 +65,7 @@ import {
   styles: ``,
 })
 export class CreateComponent {
+  store = inject(ResourceStore);
   form = new FormGroup({
     title: new FormControl('', {
       nonNullable: true,
@@ -76,7 +78,7 @@ export class CreateComponent {
   addThisThing() {
     // send it to the service, or store or whatever, if it is valid
     if (this.form.valid) {
-      console.log(this.form.value);
+      //this.store.addResource()
     } else {
       console.log('has errors, bro.');
     }
