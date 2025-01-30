@@ -21,7 +21,7 @@ export class RoundButtonDirective implements OnInit {
   }
   ngOnInit(): void {
     const v = this.variant() === 'primary' ? 'btn-primary' : 'btn-accent';
-    this.nativeEl.classList.add('btn', 'btn-circle', v);
+    this.nativeEl.classList.add('btn', 'btn-circle', 'btn-sm', v);
   }
 
   @HostListener('mouseenter') onMouseEnter() {
