@@ -1,4 +1,10 @@
-import { Component, ChangeDetectionStrategy, resource } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  resource,
+  inject,
+} from '@angular/core';
+import { ResourceStore } from '../services/resource.store';
 
 @Component({
   selector: 'app-resource-list',
@@ -21,9 +27,9 @@ import { Component, ChangeDetectionStrategy, resource } from '@angular/core';
       </svg>
       <span>Loading your news! It'll be worth it!</span>
     </div>
-    <!-- 
+
     <div class="flex flex-col gap-8">
-      @for (item of newsItems.value(); track item.id) {
+      @for (item of store.newsItems(); track item.id) {
         <div class="card bg-base-100 shadow-xl">
           <div class="card-body">
             <h3 class="card-title">{{ item.title }}</h3>
@@ -39,10 +45,12 @@ import { Component, ChangeDetectionStrategy, resource } from '@angular/core';
           </div>
         </div>
       }
-    </div> -->
+    </div>
   `,
   styles: ``,
 })
 export class ResourceListComponent {
   // with the resource data
+
+  store = inject(ResourceStore);
 }

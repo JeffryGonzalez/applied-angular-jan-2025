@@ -1,9 +1,15 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ResourceStatus,
+} from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { ResourceStore } from './services/resource.store';
 
 @Component({
   selector: 'app-resources',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ResourceStore],
   imports: [RouterLink, RouterOutlet],
   template: `
     <div>
