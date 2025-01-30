@@ -7,7 +7,7 @@ import { FeatureDirective } from '@shared';
   selector: 'app-root',
   template: `
     <app-navigation />
-    <a class="link" *feature="'golf'" routerLink="/golf">Golf EXTRA</a>
+
     <main class="container mx-auto">
       <router-outlet />
     </main>
