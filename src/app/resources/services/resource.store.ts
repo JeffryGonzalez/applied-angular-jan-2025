@@ -6,8 +6,8 @@ import {
   withHooks,
 } from '@ngrx/signals';
 import { setEntities, withEntities } from '@ngrx/signals/entities';
-
-type NewsItemEntity = {
+import { withDevtools } from '@angular-architects/ngrx-toolkit';
+export type NewsItemEntity = {
   id: string;
   title: string;
   description: string;
@@ -15,6 +15,7 @@ type NewsItemEntity = {
 };
 export const ResourceStore = signalStore(
   withEntities<NewsItemEntity>(),
+  withDevtools('resource-store'),
   withComputed((store) => {
     return {
       newsItems: computed(() => store.entities()),
