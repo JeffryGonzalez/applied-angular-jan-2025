@@ -1,12 +1,16 @@
-import { computed } from '@angular/core';
+import { computed, inject } from '@angular/core';
 import {
   patchState,
   signalStore,
   withComputed,
   withHooks,
+  withMethods,
 } from '@ngrx/signals';
 import { setEntities, withEntities } from '@ngrx/signals/entities';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
+import { ResourceDataService } from './resource.data';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { pipe, switchMap, tap } from 'rxjs';
 export type NewsItemEntity = {
   id: string;
   title: string;
@@ -21,30 +25,22 @@ export const ResourceStore = signalStore(
       newsItems: computed(() => store.entities()),
     };
   }),
+  withMethods((store) => {
+    const service = inject(ResourceDataService);
+    return {
+      load: rxMethod<void>(
+        pipe(
+          switchMap(() =>
+            service
+              .getNewsItems()
+              .pipe(tap((r) => patchState(store, setEntities(r)))),
+          ),
+        ),
+      ),
+    };
+  }),
 
   withHooks({
-    onInit(store) {
-      const fakeNewsItems = [
-        {
-          id: '1',
-          title: 'Ngrx Site',
-          description: 'Signal store, store, effects, all that',
-          link: 'https://ngrx.io',
-        },
-        {
-          id: '2',
-          title: 'Hypertheory Applied Angular',
-          description: 'The official Angular Site',
-          link: 'https://applied-angular.hypertheory.com',
-        },
-        {
-          id: '3',
-          title: 'Mock Service Workers',
-          description: 'Tool for Intercepting and Faking Http Calls',
-          link: 'https://mswjs.io',
-        },
-      ];
-      patchState(store, setEntities(fakeNewsItems));
-    },
+    onInit(store) {},
   }),
 );

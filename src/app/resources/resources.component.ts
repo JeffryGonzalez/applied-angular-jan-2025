@@ -5,11 +5,12 @@ import {
 } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { ResourceStore } from './services/resource.store';
+import { ResourceDataService } from './services/resource.data';
 
 @Component({
   selector: 'app-resources',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ResourceStore],
+  providers: [ResourceStore, ResourceDataService],
   imports: [RouterLink, RouterOutlet],
   template: `
     <div>
