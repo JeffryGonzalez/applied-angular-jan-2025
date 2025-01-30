@@ -1,27 +1,23 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  signal,
-  computed,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { RoundButtonDirective } from '@shared/directives';
 import { CounterStore } from '../services/counter.store';
 
 @Component({
   selector: 'app-ui',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [],
+  imports: [RoundButtonDirective],
   template: ` <p>Ui Two!</p>
     <div>
       <button
         [disabled]="store.decrementShouldBeDisabled()"
         (click)="store.decrement()"
-        class="btn btn-primary"
+        appRound
+        variant="accent"
       >
         -
       </button>
       <span>{{ store.current() }}</span>
-      <button (click)="store.increment()" class="btn btn-primary">+</button>
+      <button (click)="store.increment()" appRound>+</button>
     </div>`,
   styles: ``,
 })
