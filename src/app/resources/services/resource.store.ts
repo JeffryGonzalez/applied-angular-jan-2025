@@ -23,12 +23,13 @@ export const ResourceStore = signalStore(
   withComputed((store) => {
     return {
       newsItems: computed(() => store.entities()),
+      newsItemCount: computed(() => store.entities().length),
     };
   }),
   withMethods((store) => {
     const service = inject(ResourceDataService);
     return {
-      load: rxMethod<void>(
+      _load: rxMethod<void>(
         pipe(
           switchMap(() =>
             service
@@ -41,6 +42,8 @@ export const ResourceStore = signalStore(
   }),
 
   withHooks({
-    onInit(store) {},
+    onInit(store) {
+      store._load();
+    },
   }),
 );

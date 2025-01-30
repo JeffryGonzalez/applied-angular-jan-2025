@@ -53,4 +53,6 @@ export class ResourceListComponent {
   // with the resource data
 
   store = inject(ResourceStore);
+
+  constructor() {}
 }
