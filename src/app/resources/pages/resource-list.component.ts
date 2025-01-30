@@ -21,7 +21,7 @@ import { Component, ChangeDetectionStrategy, resource } from '@angular/core';
       </svg>
       <span>Loading your news! It'll be worth it!</span>
     </div>
-
+    <!-- 
     <div class="flex flex-col gap-8">
       @for (item of newsItems.value(); track item.id) {
         <div class="card bg-base-100 shadow-xl">
@@ -39,13 +39,10 @@ import { Component, ChangeDetectionStrategy, resource } from '@angular/core';
           </div>
         </div>
       }
-    </div>
+    </div> -->
   `,
   styles: ``,
 })
 export class ResourceListComponent {
-  newsItems = resource({
-    loader: () =>
-      fetch('https://prod32.hypertheory.com/api/news').then((r) => r.json()),
-  });
+  // with the resource data
 }

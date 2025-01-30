@@ -13,6 +13,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
     <div class="flex flex-col">
       <div>
         <a class="btn btn-sm btn-primary" routerLink="list">List</a>
+        <a class="btn btn-sm btn-primary" routerLink="create">Add</a>
       </div>
       <div><router-outlet /></div>
     </div>
