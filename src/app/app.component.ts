@@ -13,6 +13,6 @@ import { FeatureDirective } from '@shared';
     </main>
   `,
   styles: [],
-  imports: [NavigationComponent, RouterOutlet, FeatureDirective, RouterLink],
+  imports: [NavigationComponent, RouterOutlet],
 })
 export class AppComponent {}
