@@ -33,6 +33,11 @@ import { ResourceStore } from '../services/resource.store';
         <div class="card bg-base-100 shadow-xl">
           <div class="card-body">
             <h3 class="card-title">{{ item.title }}</h3>
+            @if (item.pending) {
+              <div class="alert alert-info">
+                <p>This is still pending. Chill</p>
+              </div>
+            }
             <p>{{ item.description }}</p>
             <div class="card-actions justify-end">
               <a

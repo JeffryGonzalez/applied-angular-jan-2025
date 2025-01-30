@@ -3,14 +3,21 @@ import { computed, inject } from '@angular/core';
 import {
   patchState,
   signalStore,
+  type,
   withComputed,
   withHooks,
   withMethods,
 } from '@ngrx/signals';
-import { addEntity, setEntities, withEntities } from '@ngrx/signals/entities';
+import {
+  addEntity,
+  removeEntity,
+  setEntities,
+  withEntities,
+} from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { mergeMap, pipe, switchMap, tap } from 'rxjs';
+import { map, mergeMap, pipe, switchMap, tap } from 'rxjs';
 import { ResourceDataService } from './resource.data';
+import { NewItemModel } from '../types';
 
 export type NewsItemEntity = {
   id: string;
@@ -20,13 +27,26 @@ export type NewsItemEntity = {
 };
 
 export type NewsItemCreateModel = Omit<NewsItemEntity, 'id'>;
+
+export type NewsItemListModel = NewItemModel & { pending: boolean };
 export const ResourceStore = signalStore(
-  withEntities<NewsItemEntity>(),
+  withEntities({ collection: '_serverData', entity: type<NewsItemEntity>() }), // my server data
+  withEntities({ collection: '_outbox', entity: type<NewsItemEntity>() }), // my outbox
   withDevtools('resource-store'),
   withComputed((store) => {
     return {
-      newsItems: computed(() => store.entities()),
-      newsItemCount: computed(() => store.entities().length),
+      newsItems: computed(() => {
+        const serverItems = store
+          ._serverDataEntities()
+          .map((s) => ({ ...s, pending: false }) as NewsItemListModel);
+        const outboxItems = store
+          ._outboxEntities()
+          .map((s) => ({ ...s, pending: true }) as NewsItemListModel);
+
+        return [...outboxItems, ...serverItems];
+      }),
+      newsItemCount: computed(() => store._serverDataEntities().length),
+      newsItemPendingCount: computed(() => store._outboxEntities().length),
     };
   }),
   withMethods((store) => {
@@ -34,10 +54,27 @@ export const ResourceStore = signalStore(
     return {
       addNewsItem: rxMethod<NewsItemCreateModel>(
         pipe(
-          mergeMap((item) =>
+          map((item) => {
+            const tempId = crypto.randomUUID();
+            const outboxItem = { ...item, id: tempId } as NewsItemEntity;
+            patchState(store, addEntity(outboxItem, { collection: '_outbox' }));
+            return {
+              tempId,
+              item,
+            };
+          }),
+          mergeMap((work) =>
             service
-              .addNewsResource(item)
-              .pipe(tap((r) => patchState(store, addEntity(r)))),
+              .addNewsResource(work.item, work.tempId)
+              .pipe(
+                tap((r) =>
+                  patchState(
+                    store,
+                    addEntity(r.item, { collection: '_serverData' }),
+                    removeEntity(r.tempId, { collection: '_outbox' }),
+                  ),
+                ),
+              ),
           ),
         ),
       ),
@@ -46,7 +83,14 @@ export const ResourceStore = signalStore(
           switchMap(() =>
             service
               .getNewsItems()
-              .pipe(tap((r) => patchState(store, setEntities(r)))),
+              .pipe(
+                tap((r) =>
+                  patchState(
+                    store,
+                    setEntities(r, { collection: '_serverData' }),
+                  ),
+                ),
+              ),
           ),
         ),
       ),

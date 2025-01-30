@@ -16,6 +16,10 @@ import { ResourceStore } from '../services/resource.store';
         <div class="stat-title">Total News Items</div>
         <div class="stat-value">{{ store.newsItemCount() }}</div>
       </div>
+      <div class="stat">
+        <div class="stat-title">Pending News Items</div>
+        <div class="stat-value">{{ store.newsItemPendingCount() }}</div>
+      </div>
     </div>
   `,
   styles: ``,
