@@ -5,7 +5,8 @@ import { canMatchFeature } from '@shared';
 export const routes: Routes = [
   {
     path: 'resources',
-    component: ResourcesComponent,
+    loadChildren: () =>
+      import('./resources/resources.routes').then((r) => r.RESOURCE_ROUTES),
   },
   {
     path: 'demos',
