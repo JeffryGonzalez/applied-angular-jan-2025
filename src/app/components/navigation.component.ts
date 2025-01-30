@@ -1,3 +1,4 @@
+import { UpperCasePipe } from '@angular/common';
 import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { FeatureDirective } from '@shared';
@@ -5,7 +6,7 @@ import { FeatureDirective } from '@shared';
 @Component({
   selector: 'app-navigation',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, FeatureDirective, RouterLinkActive],
+  imports: [RouterLink, FeatureDirective, RouterLinkActive, UpperCasePipe],
   template: `
     <div class="navbar bg-base-100">
       <div class="navbar-start">
@@ -61,13 +62,13 @@ import { FeatureDirective } from '@shared';
                   routerLinkActive="active"
                   *feature="link.feature"
                   [routerLink]="[link.href]"
-                  >{{ link.text }}</a
+                  >{{ link.text | uppercase }}</a
                 >
               </li>
             } @else {
               <li>
                 <a routerLinkActive="active" [routerLink]="[link.href]">{{
-                  link.text
+                  link.text | uppercase
                 }}</a>
               </li>
             }

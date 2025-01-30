@@ -9,6 +9,7 @@ import { CounterStore } from '../services/counter.store';
   template: ` <p>Ui Two!</p>
     <div>
       <button
+        title="This button decrements the count"
         [disabled]="store.decrementShouldBeDisabled()"
         (click)="store.decrement()"
         appRound
