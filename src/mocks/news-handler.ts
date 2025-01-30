@@ -1,4 +1,8 @@
 import { http, HttpResponse, delay } from 'msw';
+import {
+  NewsItemCreateModel,
+  NewsItemEntity,
+} from '../app/resources/services/resource.store';
 const fakeNewsItems = [
   {
     id: '1',
@@ -24,5 +28,11 @@ export const NewsHandlers = [
   http.get('https://prod32.hypertheory.com/api/news', async () => {
     await delay(2000);
     return HttpResponse.json(fakeNewsItems);
+  }),
+  http.post('https://prod32.hypertheory.com/api/news', async ({ request }) => {
+    const body = (await request.json()) as unknown as NewsItemCreateModel;
+    const newItem = { ...body, id: crypto.randomUUID() } as NewsItemEntity;
+    fakeNewsItems.push(newItem);
+    return HttpResponse.json(newItem);
   }),
 ];

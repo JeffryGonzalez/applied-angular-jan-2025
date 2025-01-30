@@ -5,7 +5,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ResourceStore } from '../services/resource.store';
+import { NewsItemCreateModel, ResourceStore } from '../services/resource.store';
+import { FormModelMapper } from '@shared';
 
 @Component({
   selector: 'app-create',
@@ -66,7 +67,7 @@ import { ResourceStore } from '../services/resource.store';
 })
 export class CreateComponent {
   store = inject(ResourceStore);
-  form = new FormGroup({
+  form = new FormGroup<FormModelMapper<NewsItemCreateModel>>({
     title: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.maxLength(100)],
@@ -78,6 +79,8 @@ export class CreateComponent {
   addThisThing() {
     // send it to the service, or store or whatever, if it is valid
     if (this.form.valid) {
+      const newItem = this.form.getRawValue();
+      this.store.addNewsItem(newItem);
       //this.store.addResource()
     } else {
       console.log('has errors, bro.');
